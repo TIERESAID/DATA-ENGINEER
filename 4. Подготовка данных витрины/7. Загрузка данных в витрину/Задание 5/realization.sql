@@ -1,3 +1,5 @@
+
+
 with act_lg as (
 	select date_trunc('month',hitdatetime)::date "month",
 		client_id,

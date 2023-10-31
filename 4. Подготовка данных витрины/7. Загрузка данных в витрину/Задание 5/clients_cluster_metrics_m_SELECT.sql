@@ -1,3 +1,10 @@
+/*
+During the last few lessons, you have been cleaning and merging data in tables and collecting metrics. Now you can gather all the work in one query and populate the clients_cluster_metrics_m table.
+The query that collects data for the showcase can be found in the file:
+clients_cluster_metrics_m_SELECT.sql
+Write a query that populates the clients_cluster_metrics_m table with data.
+*/
+
 with act_lg as (
 	select date_trunc('month',hitdatetime)::date "month",
 		client_id,

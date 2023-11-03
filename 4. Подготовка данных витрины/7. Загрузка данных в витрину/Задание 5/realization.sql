@@ -37,6 +37,7 @@ SELECT DISTINCT ON (client_id) client_id,
 FROM user_contacts
 ORDER BY client_id,created_at DESC 
 )
+INSERT INTO clients_cluster_metrics_m ("month", client_id, utm_campaign, reg_code, total_events, visit_events, registration_events, login_events, visit_to_login_events, total_pay_events, accepted_method_actions, avg_payment, made_payments, sum_payments, rejects_share)
 select coalesce(a."month",p."month") "month",
 	ua.client_id,
 	ua.utm_campaign,

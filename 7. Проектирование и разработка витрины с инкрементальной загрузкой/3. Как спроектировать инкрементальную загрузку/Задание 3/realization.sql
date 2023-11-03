@@ -1,4 +1,11 @@
 -- добавьте код сюда
+/*
+There are two tables - clients and clients_inc. The clients_inc table already contains another increment, i.e. data that has not yet been loaded into the clients table.
+Write a query that will compare all rows from clients_inc with rows from clients. Add an action field to the query that will take one of the values - U or I:
+If the record exists in clients_inc but is not in clients, action takes the value I.
+If the record exists in both tables, but the data in the fields are different, then action takes the value U.
+This way you can evaluate which records are new and which have changed.
+*/
 
 -- SELECT
 --     COALESCE(ci.client_id, c.client_id) AS client_id,

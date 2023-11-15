@@ -4,8 +4,8 @@ Projects Description:
 <tr>
 <td><b>Project</b></td>
 <td><b>Name (+link)</b></td>
-<td><b>project goal</b></td>
-<td><b>library</b></td>
+<td><b>Project Goal</b></td>
+<td><b>Tools</b></td>
 <tr>
 
 <td><b>1</b></td>

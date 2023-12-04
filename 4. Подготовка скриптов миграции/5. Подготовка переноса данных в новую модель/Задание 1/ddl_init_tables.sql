@@ -1,4 +1,3 @@
-
 -- текущая схема с таблицами --
 DROP TABLE IF EXISTS public.orders_attributes;
 CREATE TABLE public.orders_attributes (

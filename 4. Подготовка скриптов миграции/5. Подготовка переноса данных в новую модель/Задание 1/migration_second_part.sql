@@ -1,3 +1,4 @@
+
 INSERT INTO public.d_vendors
 (vendor_id, name_vendor, description)
 select distinct 
@@ -13,9 +14,44 @@ select distinct
 --select * from d_vendors limit 10;
 
 -- insert into d_categories ...
+-- Step 1: Create a new sequence for generating category_id
+CREATE SEQUENCE d_categories_category_id_sequence START 1;
+
+-- Step 2: Extract distinct category information from orders_attributes
+CREATE TEMPORARY TABLE temp_categories AS
+SELECT DISTINCT
+    split_part(category, ':', 1) AS name_category,
+    split_part(category, ':', 2) AS description
+FROM orders_attributes;
+
+-- Step 3: Remove duplicate category entries
+CREATE TEMPORARY TABLE temp_categories_unique AS
+SELECT DISTINCT name_category, description FROM temp_categories;
+
+-- Step 4: Create a mapping between old and new category names
+CREATE TEMPORARY TABLE temp_category_mapping AS
+SELECT
+    name_category,
+    description,
+    nextval('d_categories_category_id_sequence') AS category_id
+FROM temp_categories_unique;
+
+-- Step 5: Insert the cleaned and distinct category information into d_categories
+INSERT INTO d_categories (category_id, name_category, description)
+SELECT
+    tm.category_id,
+    tm.name_category,
+    tm.description
+FROM temp_categories tc
+JOIN temp_category_mapping tm ON tc.name_category = tm.name_category AND tc.description = tm.description;
+
+-- Step 6: Drop temporary tables and sequence
+DROP TABLE IF EXISTS temp_categories, temp_categories_unique, temp_category_mapping;
+DROP SEQUENCE IF EXISTS d_categories_category_id_sequence;
+
 
 -- проверяем, что таблица заполнилась
---select * from d_categories limit 10;
+-- select * from d_categories limit 10;
 
 
 INSERT INTO public.d_products

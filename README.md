@@ -16,7 +16,7 @@ Projects Description:
 
 <td><b>2</b></td>
 <td><a href="https://github.com/TIERESAID/DATA-ENGINEER/tree/main/de-project-sprint-2" target="_blank"><b>DWH and Data Model Revision for an online store</b></a></td>
-<td>Migrate to separate logical tables, and then build a data mart on them. This will help optimize the load on the storage and allow analysts, who are tasked with building an analysis of business efficiency and profitability, to answer specific questions about tariffsvendors, delivery costs to different countries, number of orders delivered over the last week. </td>
+<td>Optimize the load on the Online Store storage  by migrating data into separate logical tables, and then building a data mart on them. </td>
 <td>Data Migration, CloudBeaver, PostgreSQL, Docker,DWH Architecture,Database normalization,Dimensionnal Modelling,Data Vault </td>
 <tr>
 

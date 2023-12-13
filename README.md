@@ -17,6 +17,6 @@ Projects Description:
 <td><b>2</b></td>
 <td><a href="https://github.com/TIERESAID/DATA-ENGINEER/tree/main/de-project-sprint-1" target="_blank"><b>DWH and Data Model Revision</b></a></td>
 <td>Data Mart creation for RFM categorization of application users. Your customer is a company that develops a food delivery application.</td>
-<td>Data Migration, CloudBeaver, PostgreSQL, Docker</td>
+<td>Data Migration, CloudBeaver, PostgreSQL, Docker,DWH Architecture,Database normalization,Dimensionnal Modelling,Data Vault </td>
 <tr>
 

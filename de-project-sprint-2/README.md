@@ -3,11 +3,11 @@ Task: optimize the load on the storage by migrating data into separate logical t
 
 ### ER-diagram before
 
-![](img/before.png)
+![](img/after.png)
 
 ### ER-diagram after
 
-![](img/after.png)
+![](img/before.png)
 
 ## Project plan
 

@@ -1,32 +1,76 @@
-# Проект 2-го спринта
+# The 2nd project
+Task: optimize the load on the storage by migrating data into separate logical tables, and then building a data mart on them.
 
-### Описание
-Репозиторий предназначен для сдачи проекта 2-го спринта. 
+### ER-diagram before
 
-### Как работать с репозиторием
-1. В вашем GitHub-аккаунте автоматически создастся репозиторий `de-project-sprint-2` после того, как вы привяжете свой GitHub-аккаунт на Платформе.
-2. Скопируйте репозиторий на свой локальный компьютер, в качестве пароля укажите ваш `Access Token` (получить нужно на странице [Personal Access Tokens](https://github.com/settings/tokens)):
-	* `git clone https://github.com/{{ username }}/de-project-sprint-2.git`
-3. Перейдите в директорию с проектом: 
-	* `cd de-project-sprint-2`
-4. Выполните проект и сохраните получившийся код в локальном репозитории:
-	* `git add .`
-	* `git commit -m 'my best commit'`
-5. Обновите репозиторий в вашем GutHub-аккаунте:
-	* `git push origin main`
+![](img/before.png)
 
-### Структура репозитория
-Папка `migrations` хранит файлы миграции. 
-Файлы миграции должны быть с расширением `.sql` и содержать SQL-скрипт обновления базы данных.
+### ER-diagram after
 
-### Как запустить контейнер
-Запустите локально команду:
+![](img/after.png)
+
+## Project plan
+
+1. Create a directory of shipping costs to countries `shipping_country_rates` from the data specified in `shipping_country` and `shipping_country_base_rate`, make the primary key of the table - serial `id`, that is, the serial identifier of each row. Name the serial key `id`. The directory must consist of unique pairs of fields from the shipping table.
+
+2. Create a directory of vendor delivery rates under the `shipping_agreement` contract from the data of the `vendor_agreement_description` line separated by ":". Field names:
+- `agreementid` PK,
+- `agreement_number`,
+- `agreement_rate`,
+- `agreement_commission`.
+
+3. Create a guide about shipping types `shipping_transfer` from the string `shipping_transfer_description` separated by `:`.
+Field names:
+- `transfer_type` serial PK,
+- `transfer_model`,
+- `shipping_transfer_rate` .
+
+4. Create a table `shipping_info` with unique deliveries `shippingid` and link it to the created references `shipping_country_rates`, `shipping_agreement`, `shipping_transfer` and constant shipping information `shipping_plan_datetime`, `payment_amount`, `vendorid`.
+
+5. Create a shipping status table `shipping_status` and include information from the `shipping (status , state)` log. Add there computable information on the actual delivery time `shipping_start_fact_datetime`, `shipping_end_fact_datetime`. Reflect for each unique `shippingid` its final delivery status.
+
+6. Create a `shipping_datamart` view based on ready-made tables for analytics and include in it:
+- `shippingid`
+- `vendorid`
+- `transfer_type` — delivery type from shipping_transfer
+- `full_day_at_shipping` — the number of full days the delivery took. Calculated as: `shipping_end_fact_datetime-shipping_start_fact_datetime`.
+- `is_delay` - status indicating whether the delivery is overdue. Calculated as: `shipping_end_fact_datetime > shipping_plan_datetime → 1 ; 0`
+- `is_shipping_finish` - status indicating that the delivery is completed. If final `status = finished → 1; 0`
+- `delay_day_at_shipping` - the number of days the delivery was overdue. Calculated as: `shipping_end_fact_datetime > shipping_end_plan_datetime → shipping_end_fact_datetime - shipping_plan_datetime ; 0`.
+- `payment_amount` — user's payment amount
+- `vat` — total shipping tax. Calculated as: `payment_amount * ( shipping_country_base_rate + agreement_rate + shipping_transfer_rate)` .
+- `profit` — the company's total income from delivery. Calculated as: `payment_amount * agreement_commission`.
+
+## Scripts secuence, run it one by one
+
+- 1_create_tables.sql
+
+- 2_data_import.sql
+
+- 3_create_temp_tables.sql
+
+- 4_temp_tables_query.sql
+
+- 5_shipping_datamart_view.sql
+
+### How to work with the repository
+
+1. Copy the repository to your local machine:
+	* `git clone https://github.com/{{ username }}/de-project-2.git`
+2. Change to the project directory: 
+	* `cd de-project-2`
+3. Run docker with a command:
 
 ```
-docker run -d --rm -p 3000:3000 -p 15432:5432 --name=de-project-sprint-2-server sindb/project-sprint-2:latest
+ docker run -d --rm -p 3000:3000 -p 15432:5432 \
+ --name=de-project-sprint-2-server \
+ sindb/project-sprint-2:latest
 ```
 
-После того как запустится контейнер, у вас будут доступны:
-1. CloudBeaver
-2. PostgreSQL
-3. VSCode
+4. After the container starts, you will have access to:
+- Database
+	- `http://localhost:3000`
+
+### Repository structure
+- `/src/`
+- `/img/`

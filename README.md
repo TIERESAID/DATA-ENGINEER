@@ -24,6 +24,6 @@ Projects Description:
 <td><b>3</b></td>
 <td><a href="https://github.com/TIERESAID/DATA-ENGINEER/tree/main/de-project-sprint-2" target="_blank"><b>DWH and Data Model Revision for an Online Store</b></a></td>
 <td>Optimize the load on the Online Store storage  by migrating data into separate logical tables, and then building a data mart on them. </td>
-<td>Data Migration, CloudBeaver, PostgreSQL, Docker,ETL,API,Dimensionnal Modelling,Airflow
+<td>Data Migration, CloudBeaver, PostgreSQL, Docker,ETL,API,Dimensionnal Modelling,Apache Airflow
  </td>
 <tr>

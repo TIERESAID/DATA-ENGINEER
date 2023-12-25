@@ -20,12 +20,12 @@ def download_titanic_dataset():
    url = 'https://web.stanford.edu/class/archive/cs/cs109/cs109.1166/stuff/titanic.csv'
    df = pd.read_csv(url)
    engine = create_engine('postgresql+psycopg2://jovyan:jovyan@localhost:5432/de')
-   df.to_sql('titanic', engine, index=False, if_exists='replace', schema='default')
+   df.to_sql('titanic', engine, index=False, if_exists='replace', schema='public')
 
 
 def pivot_dataset():
     engine = create_engine('postgresql+psycopg2://jovyan:jovyan@localhost:5432/de')
-    titanic_df = pd.read_sql('select * from default.titanic', con=engine)
+    titanic_df = pd.read_sql('select * from public.titanic', con=engine)
 
     df = titanic_df.pivot_table(index=['Sex'],
                                 columns=['Pclass'],
